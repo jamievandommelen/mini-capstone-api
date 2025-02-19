@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
     render template: "products/show"
   end
   def all_products
-    @product = Product.all
+    @products = Product.all
     render template: "products/index"
   end
 end
