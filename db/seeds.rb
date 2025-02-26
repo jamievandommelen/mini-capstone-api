@@ -7,3 +7,5 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Supplier.create(name: "amazon", email: "amazon.com", phone_number: "7176554321")
+Supplier.create(name: "Aerie", email: "aerie.com", phone_number: "4335678432")

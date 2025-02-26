@@ -5,7 +5,11 @@ class ProductsController < ApplicationController
   end
   def create
     @product = Product.create(name: params[:name], price: params[:price], image_url: params[:image_url], description: params[:description])
-    render :show
+    if @product.valid?
+      render :show
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
   def show
     @product = Product.find_by(id: params[:id])
@@ -19,7 +23,11 @@ class ProductsController < ApplicationController
       image_url: params[:image_url] || @product.image_url,
       description: params[:description] || @product.description
     )
-    render :show
+    if @product.valid?
+      render :show
+    else
+      render json: { errors: @product.errors.full_messages }, status: 422
+    end
   end
   def destroy
     @product = Product.find_by(id: params[:id])
