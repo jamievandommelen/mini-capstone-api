@@ -2,12 +2,6 @@
 
 one:
   name: MyString
-  price: 1
-  description: MyString
-  supplier_id: one
 
 two:
   name: MyString
-  price: 1
-  description: MyString
-  supplier_id: one

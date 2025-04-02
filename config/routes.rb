@@ -12,9 +12,22 @@ Rails.application.routes.draw do
 # Defines the root path route ("/")
 # root "posts#index"
 
-get "/products", controller: "products", action: "index"
-post "/products" => "products#create"
-get "/products/:id", controller: "products", action: "show"
-patch "/products/:id"=> "products#update"
-delete "/products/:id" => "products#destroy"
+  post "/users" => "users#create"
+  post "/sessions" => "sessions#create"
+  delete "/sessions" => "sessions#destroy"
+
+  post "/orders" => "orders#create"
+  get "/orders/:id" => "orders#show"
+  get "/orders" => "orders#index"
+
+  post "/carted_products" => "carted_products#create"
+  get "/carted_products" => "carted_products#index"
+ 
+
+  
+  get "/products", controller: "products", action: "index"
+  post "/products" => "products#create"
+  get "/products/:id", controller: "products", action: "show"
+  patch "/products/:id"=> "products#update"
+  delete "/products/:id" => "products#destroy"
 end

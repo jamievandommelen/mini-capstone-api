@@ -1,6 +1,17 @@
 require "test_helper"
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = User.create(name: "Test", email: "test@test.com", password: "password", admin: true)
+    post "/sessions.json", params: { email: "test@test.com", password: "password" }
+  end
+  
+  
+  
+  
+  
+  
+  
   test "index" do
     get "/products.json"
     assert_response 200
@@ -11,7 +22,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "Product.count", 1 do
-      post "/products.json", params: { name: "test", price: 10, image_url: "test.jpg", description: "test description" }
+      post "/products.json", params: { name: "test", price: 10, image_url: "test.jpg", description: "test description", supplier_id: Supplier.first.id }
       assert_response 200
     end
 
@@ -19,6 +30,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       post "/products.json", params: {}
       assert_response 422
     end
+    cookies.delete("user_id")
+    post "/products.json"
+    assert_response 401
   end
 
   test "show" do
@@ -37,11 +51,14 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal "Updated name", data["name"]
     assert_equal product.price, data["price"]
-    assert_equal product.image_url, data["image_url"]
     assert_equal product.description, data["description"]
 
-    patch "/products/#{product.id}.json", params: { name: "" }
+    patch "/products/#{product.id}.json", params: { price: -2}
     assert_response 422
+  
+    cookies.delete("user_id")
+    patch "/products/#{products.id}.json"
+    assert_response 401
   end
 
   test "destroy" do
@@ -49,5 +66,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       delete "/products/#{Product.first.id}.json"
       assert_response 200
     end
+  
+    cookies.delete("user.id")
+    delete "/products/#{Product.first.id}.json"
+    assert_response 401
+  
   end
 end
