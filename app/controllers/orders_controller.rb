@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
 
     subtotal = 0
     carted_products.each do |carted_product|
-      subtotal += carted_product.price * carted_product.quantity
+      subtotal += carted_product.product.price * carted_product.quantity
     end
 
     tax = subtotal * 0.08
@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
       total: total
     )
     
-    carted_products.update_all(status: 'purchased', order_id: order_id)
+    carted_products.update_all(status: 'purchased', order_id: @order_id)
     
     render :show
   end
